@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative1">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="14dp"
+                android:text="Item Code" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="324dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:layout_alignStart="@+id/textView"
+                android:layout_alignLeft="@+id/textView"
+                android:layout_marginStart="46dp"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:hint="Item Code"
+                android:focusable="false"
+                android:clickable="false"
+                android:inputType="none" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="45dp"
+                android:layout_height="47dp"
+                android:layout_alignStart="@+id/textView"
+                android:layout_alignTop="@+id/editText"
+                android:src="@drawable/ic_barcode"
+                android:layout_alignLeft="@+id/textView" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative2"
+            android:layout_below="@id/relative1">
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="14dp"
+                android:text="Product Code" />
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="324dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView2"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_alignLeft="@+id/textView2"
+                android:layout_marginStart="46dp"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:hint="Product Code"
+                android:focusable="false"
+                android:clickable="false"
+                android:inputType="none" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="45dp"
+                android:layout_height="47dp"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_alignTop="@+id/editText2"
+                android:src="@drawable/ic_productcode"
+                android:layout_alignLeft="@+id/textView2" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative3"
+            android:layout_below="@id/relative2">
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="14dp"
+                android:text="Product Name" />
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="324dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView3"
+                android:layout_alignStart="@+id/textView3"
+                android:layout_alignLeft="@+id/textView3"
+                android:layout_marginStart="46dp"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:hint="Product Name"
+                android:focusable="false"
+                android:clickable="false"
+                android:inputType="none" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="45dp"
+                android:layout_height="47dp"
+                android:layout_alignStart="@+id/textView3"
+                android:layout_alignTop="@+id/editText3"
+                android:src="@drawable/ic_productname"
+                android:layout_alignLeft="@+id/textView3" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative4"
+            android:layout_below="@id/relative3">
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="14dp"
+                android:text="Vendor Name" />
+
+            <EditText
+                android:id="@+id/editText4"
+                android:layout_width="324dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView4"
+                android:layout_alignStart="@+id/textView4"
+                android:layout_alignLeft="@+id/textView4"
+                android:layout_marginStart="46dp"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:hint="Vendor Name"
+                android:focusable="false"
+                android:clickable="false"
+                android:inputType="none" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="45dp"
+                android:layout_height="47dp"
+                android:layout_alignStart="@+id/textView4"
+                android:layout_alignTop="@+id/editText4"
+                android:src="@drawable/ic_vendor"
+                android:layout_alignLeft="@+id/textView4" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative5"
+            android:layout_below="@id/relative4">
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="14dp"
+                android:text="Pos Price" />
+
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="324dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView5"
+                android:layout_alignStart="@+id/textView5"
+                android:layout_alignLeft="@+id/textView5"
+                android:layout_marginStart="46dp"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="1dp"
+                android:focusable="false"
+                android:clickable="false"
+                android:inputType="none"
+                android:ems="10"
+                android:hint="Pos Price" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="45dp"
+                android:layout_height="47dp"
+                android:layout_alignStart="@+id/textView5"
+                android:layout_alignTop="@+id/editText5"
+                android:src="@drawable/ic_price"
+                android:layout_alignLeft="@+id/textView5" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative7"
+            android:layout_below="@id/relative5">
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="14dp"
+                android:text="Sale Stock" />
+
+            <EditText
+                android:id="@+id/editText7"
+                android:layout_width="324dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView7"
+                android:layout_alignStart="@+id/textView7"
+                android:layout_alignLeft="@+id/textView7"
+                android:layout_marginStart="46dp"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="1dp"
+                android:focusable="false"
+                android:clickable="false"
+                android:inputType="none"
+                android:ems="10"
+                android:hint="Sale Stock" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="45dp"
+                android:layout_height="47dp"
+                android:layout_alignStart="@+id/textView7"
+                android:layout_alignTop="@+id/editText7"
+                android:src="@drawable/ic_price"
+                android:layout_alignLeft="@+id/textView7" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative8"
+            android:layout_below="@id/relative7">
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="14dp"
+                android:text="Book Stock" />
+
+            <EditText
+                android:id="@+id/editText8"
+                android:layout_width="324dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView8"
+                android:layout_alignStart="@+id/textView8"
+                android:layout_alignLeft="@+id/textView8"
+                android:layout_marginStart="46dp"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="1dp"
+                android:focusable="false"
+                android:clickable="false"
+                android:inputType="none"
+                android:ems="10"
+                android:hint="Book Stock" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="45dp"
+                android:layout_height="47dp"
+                android:layout_alignStart="@+id/textView8"
+                android:layout_alignTop="@+id/editText8"
+                android:src="@drawable/ic_price"
+                android:layout_alignLeft="@+id/textView8" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative6"
+            android:layout_below="@id/relative8">
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="14dp"
+                android:text="Request Qty" />
+
+            <EditText
+                android:id="@+id/editText6"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_alignStart="@+id/textView6"
+                android:layout_alignLeft="@+id/textView6"
+                android:layout_marginStart="106dp"
+                android:layout_marginLeft="106dp"
+                android:layout_marginTop="1dp"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="Request Qty"
+                android:inputType="number"
+                android:maxLength="5" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="45dp"
+                android:layout_height="47dp"
+                android:layout_alignStart="@+id/textView6"
+                android:layout_alignTop="@+id/editText6"
+                android:src="@drawable/ic_qty"
+                android:layout_alignLeft="@+id/textView6" />
+
+            <Button
+                android:id="@+id/buttonMinus"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/editText6"
+                android:layout_marginStart="31dp"
+                android:layout_marginLeft="31dp"
+                android:layout_marginBottom="9dp"
+                android:layout_toEndOf="@+id/imageView6"
+                android:layout_toRightOf="@+id/imageView6"
+                android:background="@drawable/ic_minus" />
+
+            <Button
+                android:id="@+id/buttonPlus"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/editText6"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="9dp"
+                android:layout_toEndOf="@+id/editText6"
+                android:layout_toRightOf="@+id/editText6"
+                android:background="@drawable/ic_plus" />
+
+
+        </RelativeLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            app:backgroundTint="@color/colorWhite"
+            android:layout_marginEnd="21dp"
+            android:layout_marginRight="21dp"
+            android:layout_marginBottom="19dp"
+            android:clickable="true"
+            android:src="@drawable/ic_scan" />
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relative6"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="142dp"
+            android:layout_marginRight="142dp"
+            android:enabled="false"
+            android:text="Save" />
+    </RelativeLayout>
+
+</ScrollView>
