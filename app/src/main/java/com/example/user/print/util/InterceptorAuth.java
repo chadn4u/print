@@ -1,5 +1,7 @@
 package com.example.user.print.util;
 
+import android.content.Context;
+
 import com.example.user.print.api.Client;
 import com.example.user.print.api.Service;
 import com.example.user.print.model.AuthorizeToken;
@@ -16,10 +18,13 @@ import retrofit2.Callback;
 public class InterceptorAuth implements Interceptor {
     private Service apiService;
     private Client client;
+    private Context mContext;
     private SessionManagement sessionManagement;
 
-    public InterceptorAuth(Service apiService) {
+    public InterceptorAuth(Service apiService,Context mContext) {
         this.apiService = apiService;
+        this.mContext = mContext;
+        sessionManagement = new SessionManagement(mContext);
     }
 
     @Override
@@ -29,7 +34,6 @@ public class InterceptorAuth implements Interceptor {
 
         if (sessionManagement.checkSharedPreferences("Accesstoken")) {
             if (mainResponse.code() == 401 || mainResponse.code() == 403) {
-                String refreshToken = sessionManagement.getTokenRefresh();
 
                 HashMap<String,String> authorizeData = new HashMap<>();
                 authorizeData.put("grant_type","refresh_token");
@@ -57,7 +61,7 @@ public class InterceptorAuth implements Interceptor {
                 });
 
                 Request.Builder builder = mainRequest.newBuilder()
-                                            .header("Authorization","Bearer "+sessionManagement.getTokenAccess())
+                                            .header("Authorization","Bearer "+ sessionManagement.getTokenAccess())
                                             .method(mainRequest.method(),mainRequest.body());
                 mainResponse = chain.proceed(builder.build());
 

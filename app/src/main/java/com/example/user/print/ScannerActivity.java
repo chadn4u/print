@@ -1,35 +1,23 @@
 package com.example.user.print;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.example.user.print.api.Service;
-import com.example.user.print.model.ScanDetail;
-import com.example.user.print.model.ScanFeed;
+import com.example.user.print.util.SetupUtil;
 import com.google.zxing.Result;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private static final String TAG = "ScannerActivity";
@@ -41,16 +29,20 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
     private static String strCd ;
     private static String corpFG;
+    private SetupUtil setupUtil = new SetupUtil();
     @Override
     public void handleResult(Result result) {
 //        Intent i = getIntent();
 //        strCd = i.getStringExtra("STR_CD");
 //        corpFG = i.getStringExtra("CORP_FG");
-
-        Etc_Management_Activity.itemCode.setText(result.getText());
+        HashMap<String,String> mapResult = new HashMap<>();
+        mapResult.put("result",result.getText());
+        setupUtil.setIntentStr(this,Etc_Management_Activity.class,this,mapResult);
+//        Etc_Management_Activity.itemCode.setText(result.getText());
+//        ((TagPrintRequestFragment) tagPrintRequestFragment).setItemCode(result.getText());
+//        onFragmentInteraction(result.getText());
 //        Etc_Management_Activity.callAPI(result.getText());
-//        finish();
-        onBackPressed();
+//        onBackPressed();
     }
 
     @Override
@@ -94,7 +86,6 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         }
         return true;
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -115,4 +106,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
             }
         }
     }
+
+
+
 }

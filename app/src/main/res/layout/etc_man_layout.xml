@@ -389,7 +389,7 @@
             android:layout_marginRight="21dp"
             android:layout_marginBottom="19dp"
             android:clickable="true"
-            android:src="@drawable/ic_scan" />
+            android:src="@drawable/ic_scan2" />
 
         <Button
             android:id="@+id/buttonSave"

@@ -45,9 +45,11 @@ public class SessionManagement {
     }
     public void saveTokenAccess(String token){
         editor.putString("Accesstoken",token);
+        editor.commit();
     }
     public void saveTokenRefresh(String token){
         editor.putString("Refreshtoken",token);
+        editor.commit();
     }
     public String getTokenAccess(){
         return sharedPreferences.getString("Accesstoken","");

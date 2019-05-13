@@ -5,14 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.user.print.api.ClientWithToken;
 import com.example.user.print.api.Service;
 import com.example.user.print.model.AuthorizeToken;
 import com.example.user.print.model.LoginFeed;
+import com.example.user.print.model.RespondProfile;
 import com.example.user.print.util.NumericKeyboardTransformationMethod;
 import com.example.user.print.util.SessionManagement;
 import com.example.user.print.util.SetupUtil;
@@ -37,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private Context mContext;
     private SessionManagement sessionManagement;
     private ProgressDialog pd;
+    private ClientWithToken clientWithToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,22 +93,23 @@ public class LoginActivity extends AppCompatActivity {
 //        application/x-www-form-urlencoded
         //http://frontier.lottemart.co.id/authorize/
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.lottemart.co.id/")
+                .baseUrl("http://frontier.lottemart.co.id/authorize/")
                 .client(clientBuilder.build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         Service serviceAPI = retrofit.create(Service.class);
-        Call<LoginFeed> call = serviceAPI.getLogin(userId.getText().toString(),passwd.getText().toString());
+        Call<AuthorizeToken> call = serviceAPI.getToken(mapData);
 
-        call.enqueue(new Callback<LoginFeed>() {
+        call.enqueue(new Callback<AuthorizeToken>() {
             @Override
-            public void onResponse(Call<LoginFeed> call, Response<LoginFeed> response) {
+            public void onResponse(Call<AuthorizeToken> call, Response<AuthorizeToken> response) {
 
 
 
                 if(!response.isSuccessful()){
+                    pd.dismiss();
                     Toast.makeText(LoginActivity.this,"Terjadi kesalahan pada server",Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -114,21 +119,23 @@ public class LoginActivity extends AppCompatActivity {
 //
 //
                         HashMap<String,String> sessionValue = new HashMap<>();
-                        sessionValue.put("EMP_NM",response.body().getData().getEMP_NM());
-                        sessionValue.put("EMP_NO",response.body().getData().getEMP_NO());
-                        sessionValue.put("STR_CD",response.body().getData().getSTR_CD());
-                        sessionValue.put("CORP_FG",response.body().getData().getCORP_FG());
+//                        sessionValue.put("EMP_NM",response.body().getData().getEMP_NM());
+//                        sessionValue.put("EMP_NO",response.body().getData().getEMP_NO());
+//                        sessionValue.put("STR_CD",response.body().getData().getSTR_CD());
+//                        sessionValue.put("CORP_FG",response.body().getData().getCORP_FG());
 
-                        sessionManagement.saveSharedPreferencesString(sessionValue);
-//                        sessionManagement.saveTokenAccess(response.body().getAccess_token());
-//                        sessionManagement.saveTokenRefresh(response.body().getRefresh_token());
-
+//                        sessionManagement.saveSharedPreferencesString(sessionValue);
+                        sessionManagement.saveTokenAccess(response.body().getAccess_token());
+                        sessionManagement.saveTokenRefresh(response.body().getRefresh_token());
+                        Log.i(TAG, "loadJsonProfile: "+ sessionManagement.getTokenAccess());
+                        Log.i(TAG, "loadJsonProfile2: "+sessionManagement.checkSharedPreferences("Accesstoken"));
 //                        SetupUtil setupUtil= new SetupUtil();
 //                        setupUtil.setIntent(getApplicationContext(),Main2Activity.class,setupUtil.getActivity(getApplicationContext()));
-                        pd.dismiss();
-                        Intent intent=new Intent(getApplicationContext(), Main2Activity.class);
-                        startActivity(intent);
-                        finish();
+
+                        loadJsonProfile();
+//                        Intent intent=new Intent(getApplicationContext(), Main2Activity.class);
+//                        startActivity(intent);
+//                        finish();
                     }else
                     {   pd.dismiss();
                         Toast.makeText(LoginActivity.this,"Username / Password Salah",Toast.LENGTH_SHORT).show();
@@ -139,14 +146,56 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginFeed> call, Throwable t) {
+            public void onFailure(Call<AuthorizeToken> call, Throwable t) {
                 pd.dismiss();
                 Toast.makeText(LoginActivity.this,"Terjadi Kesalahan",Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void loadJsonProfile(){
+        clientWithToken = new ClientWithToken("http://frontier.lottemart.co.id/code/V2/");
+        Service serviceProfile = clientWithToken.getClientWithToken(this);
 
+        Call<RespondProfile> call = serviceProfile.getProfile();
+
+        call.enqueue(new Callback<RespondProfile>() {
+            @Override
+            public void onResponse(Call<RespondProfile> call, Response<RespondProfile> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(LoginActivity.this,"E101: Login Failed",Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
+                }
+                else{
+                    if (response.body().getStatus()) {
+                        HashMap<String,String> sessionValue = new HashMap<>();
+                        sessionValue.put("EMP_NM",response.body().getData().getEmp_nm());
+                        sessionValue.put("EMP_NO",response.body().getData().getEmp_no());
+                        sessionValue.put("STR_CD",response.body().getData().getStr_cd());
+                        sessionValue.put("CORP_FG",response.body().getData().getCorp_fg());
+
+                        sessionManagement.saveSharedPreferencesString(sessionValue);
+
+                        pd.dismiss();
+                        Intent intent=new Intent(getApplicationContext(), Main2Activity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this,"E102: Login Failed",Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RespondProfile> call, Throwable t) {
+                Toast.makeText(LoginActivity.this,"E103: Login Failed",Toast.LENGTH_SHORT).show();
+                pd.dismiss();
+            }
+        });
+    }
 
      private boolean validateLogin(){
         if(userId.getText().equals("") || userId.getText().toString().isEmpty() ){

@@ -2,6 +2,7 @@ package com.example.user.print.api;
 
 import com.example.user.print.model.AuthorizeToken;
 import com.example.user.print.model.LoginFeed;
+import com.example.user.print.model.RespondProfile;
 import com.example.user.print.model.RespondStatus;
 import com.example.user.print.model.ScanFeed;
 
@@ -31,19 +32,35 @@ public interface Service {
     @FormUrlEncoded
     Call<AuthorizeToken> getRefreshToken(@Body HashMap<String,String> data);
 
-    @Headers("X-API-KEY: 026dabaf69302a0b44b14978b16b4fd3")
-    @POST("api/gmd/scan")
+    @POST("employee")
+    Call<RespondProfile> getProfile();
+
+//    @Headers("X-API-KEY: 026dabaf69302a0b44b14978b16b4fd3")
+//    @POST("api/gmd/scan")
+//    @FormUrlEncoded
+//    Call<ScanFeed> getScanDetail(@Field("barcode") String barcode
+//            , @Field("corp") String corp
+//            , @Field("store") String store);
+
+    @POST("scan")
     @FormUrlEncoded
     Call<ScanFeed> getScanDetail(@Field("barcode") String barcode
             , @Field("corp") String corp
             , @Field("store") String store);
 
-    @Headers("X-API-KEY: 026dabaf69302a0b44b14978b16b4fd3")
-    @POST("api/gmd/print")
+//    @Headers("X-API-KEY: 026dabaf69302a0b44b14978b16b4fd3")
+//    @POST("api/gmd/print")
+//    @FormUrlEncoded
+//    Call<RespondStatus> savePrint(@Field("store") String storeCD
+//            , @Field("barcode") String barcode
+//            , @Field("qty") String qty
+//            , @Field("emp_no") String emp_no);
+
+
+    @POST("print")
     @FormUrlEncoded
     Call<RespondStatus> savePrint(@Field("store") String storeCD
             , @Field("barcode") String barcode
             , @Field("qty") String qty
             , @Field("emp_no") String emp_no);
-
 }

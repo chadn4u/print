@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.user.print.api.Client;
+import com.example.user.print.api.ClientWithToken;
 import com.example.user.print.api.Service;
 import com.example.user.print.model.LoginDtl;
 import com.example.user.print.model.LoginFeed;
@@ -51,9 +52,10 @@ public class Etc_Management_Activity extends AppCompatActivity {
     String userID ;
     String strCd ;
     String corpFG;
+    String result;
     boolean flagToast = false;
     String statusPrint;
-    Client client;
+    ClientWithToken client;
     private SetupUtil setupUtil;
     private Button incrementButton;
     private Button decrementButton;
@@ -95,10 +97,13 @@ public class Etc_Management_Activity extends AppCompatActivity {
         userID = sessionManagement.getSharedPreferences("EMP_NO","");//i.getStringExtra("EMP_NO");
         strCd = sessionManagement.getSharedPreferences("STR_CD","");//.getStringExtra("STR_CD");
         corpFG = sessionManagement.getSharedPreferences("CORP_FG","");//.getStringExtra("CORP_FG");
+
+        result = getIntent().getStringExtra("result");
+        itemCode.setText(result);
 /**
  * end of Get Intent
  */
-
+        loadJson();
 /**
  *  itemCode oNTextChangeListener
  */
@@ -117,8 +122,8 @@ public class Etc_Management_Activity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if(!itemCode.getText().toString().isEmpty() || !itemCode.getText().toString().equals(""))
                 {
-                    client = new Client("https://api.lottemart.co.id/");
-                    Service serviceAPI = client.getClient();
+                    client = new ClientWithToken("http://frontier.lottemart.co.id/code/V2/");
+                    Service serviceAPI = client.getClientWithToken(Etc_Management_Activity.this);
                     Call<ScanFeed> call = serviceAPI.getScanDetail(itemCode.getText().toString(),corpFG,strCd);
 
                     call.enqueue(new Callback<ScanFeed>() {
@@ -228,9 +233,9 @@ public class Etc_Management_Activity extends AppCompatActivity {
                         return;
                     }
 
-                    client = new Client("https://api.lottemart.co.id/");
+                    client = new ClientWithToken("http://frontier.lottemart.co.id/purchase/V2/");
 
-                    Service serviceAPI = client.getClient();
+                    Service serviceAPI = client.getClientWithToken(Etc_Management_Activity.this);
                     Call<RespondStatus> call = serviceAPI.savePrint(strCd
                                             ,itemCode.getText().toString()
                                             ,requestQty.getText().toString()
@@ -254,6 +259,7 @@ public class Etc_Management_Activity extends AppCompatActivity {
                                     enableDisableButton(decrementButton,false);
 //                                    Toast.makeText(mContext,"Sukses di simpan!!",Toast.LENGTH_SHORT).show();
                                     setupUtil.showToast(mContext,"Sukses di simpan!!",0);
+                                    finish();
                                 }
                                 else
                                 {
@@ -302,6 +308,64 @@ public class Etc_Management_Activity extends AppCompatActivity {
     private void enableDisableEditText(EditText etId,boolean status){
         if (etId instanceof EditText){
             etId.setEnabled(status);
+        }
+    }
+    private void loadJson(){
+        if(!itemCode.getText().toString().isEmpty() || !itemCode.getText().toString().equals(""))
+        {
+            client = new ClientWithToken("http://frontier.lottemart.co.id/code/V2/");
+            Service serviceAPI = client.getClientWithToken(Etc_Management_Activity.this);
+            Call<ScanFeed> call = serviceAPI.getScanDetail(itemCode.getText().toString(),corpFG,strCd);
+
+            call.enqueue(new Callback<ScanFeed>() {
+                @Override
+                public void onResponse(Call<ScanFeed> call, Response<ScanFeed> response) {
+
+                    if(!response.isSuccessful()){
+                        setupUtil.showToast(mContext,"Terjadi Kesalahan pada server",0);
+                        //Toast.makeText(mContext,"Terjadi Kesalahan pada server",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+
+                        if(response.body().getStatus()) {
+
+                            productCode.setText(response.body().getData().getProd_cd());
+                            productName.setText(response.body().getData().getProd_nm());
+                            vendorName.setText(response.body().getData().getVen_nm());
+                            posPrice.setText(response.body().getData().getSale_prc());
+                            requestQty.setText("0");
+                            bookStock.setText(response.body().getData().getBook_stock());
+                            salesStock.setText(response.body().getData().getSale_stock());
+                            statusPrint = response.body().getData().getStatus_print();
+//                                    buttonSave.setEnabled(true);
+                            enableDisableEditText(requestQty,true);
+
+                            enableDisableButton(buttonSave,true);
+                            enableDisableButton(incrementButton,true);
+                            enableDisableButton(decrementButton,true);
+
+//                                    requestQty.setEnabled(true);
+                        }
+                        else
+                        {
+                            setupUtil.showToast(mContext,"Product tidak terdaftar",0);
+//                                    Toast.makeText(mContext,"Product tidak terdaftar",Toast.LENGTH_SHORT).show();
+                            clearEditText();
+
+//                                    requestQty.setEnabled(false);
+                            enableDisableEditText(requestQty,false);
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ScanFeed> call, Throwable t) {
+                    setupUtil.showToast(mContext,"Terjadi Kesalahan pada server",0);
+//                            Toast.makeText(mContext,"Terjadi Kesalahan pada server",Toast.LENGTH_SHORT).show();
+                }
+
+            });
         }
     }
 }
