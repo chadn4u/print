@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.user.print.util.SetupUtil;
 import com.google.zxing.Result;
@@ -37,6 +38,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 //        corpFG = i.getStringExtra("CORP_FG");
         HashMap<String,String> mapResult = new HashMap<>();
         mapResult.put("result",result.getText());
+        Log.d(TAG, "handleResult: "+result.getText());
         setupUtil.setIntentStr(this,Etc_Management_Activity.class,this,mapResult);
 //        Etc_Management_Activity.itemCode.setText(result.getText());
 //        ((TagPrintRequestFragment) tagPrintRequestFragment).setItemCode(result.getText());

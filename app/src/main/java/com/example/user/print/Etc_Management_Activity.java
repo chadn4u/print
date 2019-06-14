@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.print.api.Client;
@@ -46,8 +48,7 @@ public class Etc_Management_Activity extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     private static Button buttonSave;
     private static Context mContext;
-    public static EditText itemCode;
-    EditText productCode,productName,vendorName,posPrice,requestQty,salesStock,bookStock;
+    TextView productCode,productName,vendorName,posPrice,requestQty,salesStock,bookStock,itemCode;
     String username;//i.getStringExtra("EMP_NM");
     String userID ;
     String strCd ;
@@ -57,32 +58,31 @@ public class Etc_Management_Activity extends AppCompatActivity {
     String statusPrint;
     ClientWithToken client;
     private SetupUtil setupUtil;
-    private Button incrementButton;
-    private Button decrementButton;
+    private ImageButton incrementButton,decrementButton;
     private SessionManagement sessionManagement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.etc_man_layout);
+        setContentView(R.layout.etc_man_layout1);
 
         mContext = Etc_Management_Activity.this;
         setupUtil = new SetupUtil();
 /**
  * findViewByID
   */
-        floatingActionButton = findViewById(R.id.scan);
+//        floatingActionButton = findViewById(R.id.scan);
         buttonSave = findViewById(R.id.buttonSave);
-        itemCode = findViewById(R.id.editText);
-        productCode  = findViewById(R.id.editText2);
-        productName  = findViewById(R.id.editText3);
-        vendorName = findViewById(R.id.editText4);
-        posPrice = findViewById(R.id.editText5);
-        requestQty= findViewById(R.id.editText6);
-        salesStock = findViewById(R.id.editText7);
-        bookStock = findViewById(R.id.editText8);
-        incrementButton = findViewById(R.id.buttonPlus);
-        decrementButton = findViewById(R.id.buttonMinus);
+        itemCode = findViewById(R.id.barcode);
+        productCode  = findViewById(R.id.productCode);
+        productName  = findViewById(R.id.productName);
+        vendorName = findViewById(R.id.vendorName);
+        posPrice = findViewById(R.id.posPrice);
+        requestQty= findViewById(R.id.requestQty);
+        salesStock = findViewById(R.id.salesStock);
+        bookStock = findViewById(R.id.bookStock);
+        incrementButton = findViewById(R.id.btnPlus);
+        decrementButton = findViewById(R.id.btnMinus);
 /**
  * End of findViewByID
  */
@@ -99,6 +99,7 @@ public class Etc_Management_Activity extends AppCompatActivity {
         corpFG = sessionManagement.getSharedPreferences("CORP_FG","");//.getStringExtra("CORP_FG");
 
         result = getIntent().getStringExtra("result");
+        Log.d(TAG, "onCreate: "+result);
         itemCode.setText(result);
 /**
  * end of Get Intent
@@ -147,7 +148,7 @@ public class Etc_Management_Activity extends AppCompatActivity {
                                     salesStock.setText(response.body().getData().getSale_stock());
                                     statusPrint = response.body().getData().getStatus_print();
 //                                    buttonSave.setEnabled(true);
-                                    enableDisableEditText(requestQty,true);
+//                                    enableDisableEditText(requestQty,true);
 
                                     enableDisableButton(buttonSave,true);
                                     enableDisableButton(incrementButton,true);
@@ -162,7 +163,7 @@ public class Etc_Management_Activity extends AppCompatActivity {
                                     clearEditText();
 
 //                                    requestQty.setEnabled(false);
-                                    enableDisableEditText(requestQty,false);
+//                                    enableDisableEditText(requestQty,false);
                                 }
                             }
 
@@ -183,13 +184,13 @@ public class Etc_Management_Activity extends AppCompatActivity {
  * end of onKeyChangeListener
  */
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setupUtil.setIntentWithoutFinish(mContext,ScannerActivity.class,setupUtil.getActivity(mContext));
-//                startActivity(new Intent(getApplicationContext(),ScannerActivity.class));
-            }
-        });
+//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setupUtil.setIntentWithoutFinish(mContext,ScannerActivity.class,setupUtil.getActivity(mContext));
+////                startActivity(new Intent(getApplicationContext(),ScannerActivity.class));
+//            }
+//        });
 
         incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,7 +254,7 @@ public class Etc_Management_Activity extends AppCompatActivity {
                                 if(response.body().getStatus()) {
                                     clearEditText();
 
-                                    enableDisableEditText(requestQty,false);
+//                                    enableDisableEditText(requestQty,false);
                                     enableDisableButton(buttonSave,false);
                                     enableDisableButton(incrementButton,false);
                                     enableDisableButton(decrementButton,false);
@@ -265,7 +266,7 @@ public class Etc_Management_Activity extends AppCompatActivity {
                                 {
                                     clearEditText();
 
-                                    enableDisableEditText(requestQty,false);
+//                                    enableDisableEditText(requestQty,false);
                                     enableDisableButton(buttonSave,false);
                                     enableDisableButton(incrementButton,false);
                                     enableDisableButton(decrementButton,false);
@@ -300,13 +301,18 @@ public class Etc_Management_Activity extends AppCompatActivity {
         salesStock.setText("");
         bookStock.setText("");
     }
+    private void enableDisableButton(ImageButton buttonId,boolean status){
+        if (buttonId instanceof ImageButton){
+            buttonId.setEnabled(status);
+        }
+    }
     private void enableDisableButton(Button buttonId,boolean status){
         if (buttonId instanceof Button){
             buttonId.setEnabled(status);
         }
     }
-    private void enableDisableEditText(EditText etId,boolean status){
-        if (etId instanceof EditText){
+    private void enableDisableEditText(TextView etId,boolean status){
+        if (etId instanceof TextView){
             etId.setEnabled(status);
         }
     }
@@ -338,7 +344,7 @@ public class Etc_Management_Activity extends AppCompatActivity {
                             salesStock.setText(response.body().getData().getSale_stock());
                             statusPrint = response.body().getData().getStatus_print();
 //                                    buttonSave.setEnabled(true);
-                            enableDisableEditText(requestQty,true);
+//                            enableDisableEditText(requestQty,true);
 
                             enableDisableButton(buttonSave,true);
                             enableDisableButton(incrementButton,true);
@@ -353,7 +359,7 @@ public class Etc_Management_Activity extends AppCompatActivity {
                             clearEditText();
 
 //                                    requestQty.setEnabled(false);
-                            enableDisableEditText(requestQty,false);
+//                            enableDisableEditText(requestQty,false);
                         }
                     }
 
