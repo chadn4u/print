@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.user.print.R;
 import com.example.user.print.ScannerActivity;
 import com.example.user.print.util.SetupUtil;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
@@ -87,7 +88,8 @@ public class PrintRequestContainerFragment extends Fragment
         floatingTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setupUtil.setIntentWithoutFinish(getContext(), ScannerActivity.class,setupUtil.getActivity(getContext()));
+                new IntentIntegrator(setupUtil.getActivity(getContext())).setCaptureActivity(ScannerActivity.class).initiateScan();
+//                setupUtil.setIntentWithoutFinish(getContext(), ScannerActivity.class,setupUtil.getActivity(getContext()));
             }
         });
 
@@ -139,5 +141,6 @@ public class PrintRequestContainerFragment extends Fragment
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 
 }

@@ -233,6 +233,13 @@ public class Etc_Management_Activity extends AppCompatActivity {
 //                        Toast.makeText(Etc_Management_Activity.this,"Qty belum di input!",Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    if (Integer.parseInt(requestQty.getText().toString()) == 0){
+                        setupUtil.showToast(mContext,"Wrong qty!",0);
+                        return;
+                    }else if(Integer.parseInt(requestQty.getText().toString())>= 9999){
+                        setupUtil.showToast(mContext,"Too many qty!",0);
+                        return;
+                    }
 
                     client = new ClientWithToken("http://frontier.lottemart.co.id/purchase/V2/");
 

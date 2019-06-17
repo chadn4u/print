@@ -9,10 +9,19 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.user.print.util.SetupUtil;
 import com.google.zxing.Result;
+import com.google.zxing.ResultPoint;
+import com.journeyapps.barcodescanner.BarcodeCallback;
+import com.journeyapps.barcodescanner.BarcodeResult;
+import com.journeyapps.barcodescanner.CaptureManager;
+import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +29,7 @@ import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler,BarcodeCallback {
     private static final String TAG = "ScannerActivity";
     public static final int MULTIPLE_PERMISSIONS = 10;
     String[] permissions= new String[]{
@@ -31,6 +40,11 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     private static String strCd ;
     private static String corpFG;
     private SetupUtil setupUtil = new SetupUtil();
+    private CaptureManager capture;
+    private DecoratedBarcodeView barcodeScannerView;
+    private MaterialSearchView searchView;
+
+
     @Override
     public void handleResult(Result result) {
 //        Intent i = getIntent();
@@ -58,20 +72,62 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
             checkPermissions();
         }
 
-        setContentView(zXingScannerView);
+//        setContentView(zXingScannerView);
+        setContentView(R.layout.scan_layout);
+        Toolbar toolbar = findViewById(R.id.my_awesome_toolbar);
+        toolbar.setTitle("Scan Barcode");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                HashMap<String,String> mapResult = new HashMap<>();
+                mapResult.put("result",query);
+                setupUtil.setIntentStr(ScannerActivity.this,Etc_Management_Activity.class,ScannerActivity.this,mapResult);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
+
+
+        capture = new CaptureManager(this, barcodeScannerView);
+        capture.initializeFromIntent(getIntent(), savedInstanceState);
+        capture.decode();
+        barcodeScannerView.decodeSingle(this);
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        zXingScannerView.stopCamera();
+//        zXingScannerView.stopCamera();
+        capture.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        zXingScannerView.setResultHandler(this);
-        zXingScannerView.startCamera();
+        capture.onResume();
+
+//        zXingScannerView.setResultHandler(this);
+//        zXingScannerView.startCamera();
     }
     private  boolean checkPermissions() {
         int result;
@@ -109,6 +165,22 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        capture.onDestroy();
+    }
 
+    @Override
+    public void barcodeResult(BarcodeResult result) {
+        HashMap<String,String> mapResult = new HashMap<>();
+        mapResult.put("result",result.getText());
+        Log.d(TAG, "handleResult: "+result.getText());
+        setupUtil.setIntentStr(ScannerActivity.this,Etc_Management_Activity.class,ScannerActivity.this,mapResult);
+    }
 
+    @Override
+    public void possibleResultPoints(List<ResultPoint> resultPoints) {
+
+    }
 }
