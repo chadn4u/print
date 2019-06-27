@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            >
+            <ImageView
+                android:id="@+id/logoLotte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo_lotte"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="HHT Apps"
+                android:textSize="23sp"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/lottegroup"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/Relative1"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linear1">
+            <EditText
+                android:id="@+id/editUserID"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_corner"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/lottegroup"
+                android:drawableLeft="@drawable/ic_login_white"
+                android:textColorHint="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                android:hint="Username"
+                android:textSize="15sp"
+                android:paddingLeft="20dp"
+                android:inputType="numberPassword"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Relative2"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Relative1">
+            <EditText
+                android:id="@+id/editUserPasswd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_corner"
+                android:drawableLeft="@drawable/ic_lock_white"
+                android:layout_alignParentTop="true"
+                android:hint="Password"
+                android:fontFamily="@font/lottegroup"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="15sp"
+                android:paddingLeft="20dp"
+                android:inputType="numberPassword"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Relative3"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Relative2">
+        </RelativeLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Relative3"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/rounded_corner_button"
+            android:fontFamily="@font/lottegroup"
+            android:text="Sign In"
+            android:id="@+id/buttonLogin"
+            android:textColor="@color/colorRed"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>

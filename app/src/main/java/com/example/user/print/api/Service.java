@@ -1,7 +1,10 @@
 package com.example.user.print.api;
 
+import android.support.annotation.Nullable;
+
 import com.example.user.print.model.AuthorizeToken;
 import com.example.user.print.model.LoginFeed;
+import com.example.user.print.model.MenuFeed;
 import com.example.user.print.model.RespondProfile;
 import com.example.user.print.model.RespondStatus;
 import com.example.user.print.model.ScanFeed;
@@ -30,7 +33,7 @@ public interface Service {
 
     @POST("refresh_token")
     @FormUrlEncoded
-    Call<AuthorizeToken> getRefreshToken(@Body HashMap<String,String> data);
+    Call<AuthorizeToken> getRefreshToken(@FieldMap HashMap<String,String> data);
 
     @POST("employee")
     Call<RespondProfile> getProfile();
@@ -57,10 +60,21 @@ public interface Service {
 //            , @Field("emp_no") String emp_no);
 
 
+    @POST("shortage")
+    @FormUrlEncoded
+    Call<RespondStatus> saveShortage(@Field("store") String storeCD
+            , @Field("barcode") String barcode
+            , @Field("vendor") String vendor
+            , @Field("product") String product
+            , @Field("emp_no") String emp_no);
+
     @POST("print")
     @FormUrlEncoded
     Call<RespondStatus> savePrint(@Field("store") String storeCD
             , @Field("barcode") String barcode
             , @Field("qty") String qty
             , @Field("emp_no") String emp_no);
+
+    @POST("menus")
+    Call<MenuFeed> getMenu();
 }

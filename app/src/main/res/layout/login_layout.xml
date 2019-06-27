@@ -41,8 +41,9 @@
                     android:textSize="23sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
+
                     android:textColor="@color/colorWhite"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/lottegroup"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
@@ -79,6 +80,7 @@
                 android:layout_toRightOf="@id/imageViewUserIcon"
                 android:background="@color/colorEditTextBG"
                 android:layout_alignParentTop="true"
+                android:fontFamily="@font/lottegroup"
                 android:hint="ID"
                 android:textSize="15sp"
                 android:paddingLeft="20dp"
@@ -110,6 +112,7 @@
                     android:background="@color/colorEditTextBG"
                     android:layout_alignParentTop="true"
                     android:hint="Password"
+                    android:fontFamily="@font/lottegroup"
                     android:textSize="15sp"
                     android:paddingLeft="20dp"
                     android:inputType="numberPassword"
@@ -132,7 +135,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:background="@color/colorPrimary"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/lottegroup"
                 android:text="Sign In"
                 android:id="@+id/buttonLogin"
                 android:textColor="@color/colorWhite"

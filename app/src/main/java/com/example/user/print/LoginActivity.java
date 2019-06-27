@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_layout);
+        setContentView(R.layout.new_layout_login);
         mContext = getApplicationContext();
         sessionManagement = new SessionManagement(mContext);
 
@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<AuthorizeToken> call, Throwable t) {
                 pd.dismiss();
-                Toast.makeText(LoginActivity.this,"Terjadi Kesalahan",Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this,t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }

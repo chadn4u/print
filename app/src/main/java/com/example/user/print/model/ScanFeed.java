@@ -12,6 +12,19 @@ public class ScanFeed {
     @SerializedName("status")
     @Expose
     private Boolean status;
+
+    @SerializedName("message")
+    @Expose
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public ScanDetail getData() {
         return data;
     }

@@ -35,7 +35,8 @@
     <com.miguelcatalan.materialsearchview.MaterialSearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
     <com.journeyapps.barcodescanner.DecoratedBarcodeView
         android:layout_width="match_parent"

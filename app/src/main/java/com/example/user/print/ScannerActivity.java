@@ -2,6 +2,7 @@ package com.example.user.print;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,8 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
-public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler,BarcodeCallback {
+//implements ZXingScannerView.ResultHandler,BarcodeCallback
+public class ScannerActivity extends AppCompatActivity  {
     private static final String TAG = "ScannerActivity";
     public static final int MULTIPLE_PERMISSIONS = 10;
     String[] permissions= new String[]{
@@ -45,21 +47,21 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     private MaterialSearchView searchView;
 
 
-    @Override
-    public void handleResult(Result result) {
+//    @Override
+//    public void handleResult(Result result) {
 //        Intent i = getIntent();
 //        strCd = i.getStringExtra("STR_CD");
 //        corpFG = i.getStringExtra("CORP_FG");
-        HashMap<String,String> mapResult = new HashMap<>();
-        mapResult.put("result",result.getText());
-        Log.d(TAG, "handleResult: "+result.getText());
-        setupUtil.setIntentStr(this,Etc_Management_Activity.class,this,mapResult);
+//        HashMap<String,String> mapResult = new HashMap<>();
+//        mapResult.put("result",result.getText());
+//        Log.d(TAG, "handleResult: "+result.getText());
+//        setupUtil.setIntentStr(this,Etc_Management_Activity.class,this,mapResult);
 //        Etc_Management_Activity.itemCode.setText(result.getText());
 //        ((TagPrintRequestFragment) tagPrintRequestFragment).setItemCode(result.getText());
 //        onFragmentInteraction(result.getText());
 //        Etc_Management_Activity.callAPI(result.getText());
 //        onBackPressed();
-    }
+//    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,30 +78,33 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         setContentView(R.layout.scan_layout);
         Toolbar toolbar = findViewById(R.id.my_awesome_toolbar);
         toolbar.setTitle("Scan Barcode");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        searchView = findViewById(R.id.search_view);
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                HashMap<String,String> mapResult = new HashMap<>();
-                mapResult.put("result",query);
-                setupUtil.setIntentStr(ScannerActivity.this,Etc_Management_Activity.class,ScannerActivity.this,mapResult);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        searchView = findViewById(R.id.search_view);
+//        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                HashMap<String,String> mapResult = new HashMap<>();
+//                mapResult.put("result",query);
+//                setupUtil.setIntentStr(ScannerActivity.this,Etc_Management_Activity.class,ScannerActivity.this,mapResult);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
         barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
 
 
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
-        barcodeScannerView.decodeSingle(this);
+//        barcodeScannerView.decodeSingle(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            barcodeScannerView.setFocusedByDefault(true);
+        }
 
 
     }
@@ -108,8 +113,8 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        searchView.setMenuItem(item);
 
         return true;
     }
@@ -172,15 +177,25 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
     }
 
     @Override
-    public void barcodeResult(BarcodeResult result) {
-        HashMap<String,String> mapResult = new HashMap<>();
-        mapResult.put("result",result.getText());
-        Log.d(TAG, "handleResult: "+result.getText());
-        setupUtil.setIntentStr(ScannerActivity.this,Etc_Management_Activity.class,ScannerActivity.this,mapResult);
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
-    public void possibleResultPoints(List<ResultPoint> resultPoints) {
-
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return barcodeScannerView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
     }
+    //    @Override
+//    public void barcodeResult(BarcodeResult result) {
+//        HashMap<String,String> mapResult = new HashMap<>();
+//        mapResult.put("result",result.getText());
+//        Log.d(TAG, "handleResult: "+result.getText());
+//        setupUtil.setIntentStr(ScannerActivity.this,Etc_Management_Activity.class,ScannerActivity.this,mapResult);
+//    }
+//
+//    @Override
+//    public void possibleResultPoints(List<ResultPoint> resultPoints) {
+//
+//    }
 }

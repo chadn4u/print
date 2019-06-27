@@ -49,6 +49,7 @@ public class ClientWithToken {
                 public Response intercept(Chain chain) throws IOException {
                     Request newRequest = chain.request().newBuilder()
                             .addHeader("Authorization","Bearer "+ sessionManagement.getTokenAccess())
+                            .addHeader("Accept","application/json")
                             .build();
 
                     return chain.proceed(newRequest);

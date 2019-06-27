@@ -3,6 +3,7 @@ package com.example.user.print.util;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,7 +56,7 @@ public class IntentIntegrator {
 
     public static final Collection<String> ALL_CODE_TYPES = null;
 
-    private final Activity activity;
+    private Activity activity;
     private android.app.Fragment fragment;
     private android.support.v4.app.Fragment supportFragment;
 
@@ -71,9 +72,14 @@ public class IntentIntegrator {
         return CaptureActivity.class;
     }
 
-    public IntentIntegrator(Activity activity) {
-        this.activity = activity;
+
+    public IntentIntegrator(android.support.v4.app.Fragment fragment) {
+        this.supportFragment = fragment;
     }
+    //public IntentIntegrator(Activity activity) {
+      //  this.activity = activity;
+  //  }
+
 
     public Class<?> getCaptureActivity() {
         if (captureActivity == null) {
@@ -113,23 +119,23 @@ public class IntentIntegrator {
      *                 {@link #startActivityForResult(Intent, int)} will be called on the {@link Fragment} instead
      *                 of an {@link Activity}
      */
-    public static IntentIntegrator forSupportFragment(android.support.v4.app.Fragment fragment) {
-        IntentIntegrator integrator = new IntentIntegrator(fragment.getActivity());
-        integrator.supportFragment = fragment;
-        return integrator;
-    }
+//    public static IntentIntegrator forSupportFragment(android.support.v4.app.Fragment fragment) {
+//        IntentIntegrator integrator = new IntentIntegrator(fragment.getActivity());
+//        integrator.supportFragment = fragment;
+//        return integrator;
+//    }
 
     /**
-     * @param fragment {@link Fragment} invoking the integration.
+     * @param //fragment {@link Fragment} invoking the integration.
      *                 {@link #startActivityForResult(Intent, int)} will be called on the {@link Fragment} instead
      *                 of an {@link Activity}
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static IntentIntegrator forFragment(Fragment fragment) {
-        IntentIntegrator integrator = new IntentIntegrator(fragment.getActivity());
-        integrator.fragment = fragment;
-        return integrator;
-    }
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+//    public static IntentIntegrator forFragment(Fragment fragment) {
+//        IntentIntegrator integrator = new IntentIntegrator(fragment.getActivity());
+//        integrator.fragment = fragment;
+//        return integrator;
+//    }
 
     public Map<String, ?> getMoreExtras() {
         return moreExtras;
@@ -254,7 +260,19 @@ public class IntentIntegrator {
      * @return the intent
      */
     public Intent createScanIntent() {
-        Intent intentScan = new Intent(activity, getCaptureActivity());
+        Context context;
+        if (activity != null){
+            context = activity;
+        }else if(fragment != null){
+            context = fragment.getActivity();
+        }
+        else if (supportFragment != null){
+            context = supportFragment.getActivity();
+        }
+        else{
+            context = null;
+        }
+        Intent intentScan = new Intent(context, getCaptureActivity());
         intentScan.setAction(Intents.Scan.ACTION);
 
         // check which types of codes to scan for

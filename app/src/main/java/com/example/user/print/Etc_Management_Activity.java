@@ -46,7 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Etc_Management_Activity extends AppCompatActivity {
     private static final String TAG = "Etc_Management_Activity";
     private FloatingActionButton floatingActionButton;
-    private static Button buttonSave;
+    private static Button buttonSave,buttonWaste,buttonShortage;
     private static Context mContext;
     TextView productCode,productName,vendorName,posPrice,requestQty,salesStock,bookStock,itemCode;
     String username;//i.getStringExtra("EMP_NM");
@@ -72,7 +72,9 @@ public class Etc_Management_Activity extends AppCompatActivity {
  * findViewByID
   */
 //        floatingActionButton = findViewById(R.id.scan);
-        buttonSave = findViewById(R.id.buttonSave);
+        buttonSave = findViewById(R.id.buttonTagPrint);
+        buttonShortage = findViewById(R.id.buttonShortage);
+        buttonWaste = findViewById(R.id.buttonWaste);
         itemCode = findViewById(R.id.barcode);
         productCode  = findViewById(R.id.productCode);
         productName  = findViewById(R.id.productName);
@@ -83,6 +85,9 @@ public class Etc_Management_Activity extends AppCompatActivity {
         bookStock = findViewById(R.id.bookStock);
         incrementButton = findViewById(R.id.btnPlus);
         decrementButton = findViewById(R.id.btnMinus);
+
+        enableDisableButton(buttonShortage,false);
+        enableDisableButton(buttonWaste,false);
 /**
  * End of findViewByID
  */
@@ -219,7 +224,18 @@ public class Etc_Management_Activity extends AppCompatActivity {
                 requestQty.setText(Integer.toString(i));
             }
         });
-
+        buttonShortage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v,"Fungsi belum tersedia",Snackbar.LENGTH_SHORT).setAction("Action",null).show();
+            }
+        });
+        buttonWaste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v,"Fungsi belum tersedia",Snackbar.LENGTH_SHORT).setAction("Action",null).show();
+            }
+        });
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,6 +332,8 @@ public class Etc_Management_Activity extends AppCompatActivity {
     private void enableDisableButton(Button buttonId,boolean status){
         if (buttonId instanceof Button){
             buttonId.setEnabled(status);
+            if (!status)
+            buttonId.setTextColor(getResources().getColor(android.R.color.black));
         }
     }
     private void enableDisableEditText(TextView etId,boolean status){

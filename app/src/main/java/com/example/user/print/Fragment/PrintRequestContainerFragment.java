@@ -88,7 +88,7 @@ public class PrintRequestContainerFragment extends Fragment
         floatingTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new IntentIntegrator(setupUtil.getActivity(getContext())).setCaptureActivity(ScannerActivity.class).initiateScan();
+                new IntentIntegrator(setupUtil.getActivity(getContext())).setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES).setCaptureActivity(ScannerActivity.class).initiateScan();
 //                setupUtil.setIntentWithoutFinish(getContext(), ScannerActivity.class,setupUtil.getActivity(getContext()));
             }
         });

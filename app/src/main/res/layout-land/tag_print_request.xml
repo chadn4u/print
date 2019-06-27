@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/colorRed"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="560dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:contextClickable="true"
+            android:background="@drawable/rounded_corner_searchview"
+            android:backgroundTint="@color/colorWhite" />
+
+        <ImageView
+            android:id="@+id/scanStart"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_corner"
+            android:src="@drawable/ic_scannew" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentPrintRequest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+</LinearLayout>
